@@ -798,6 +798,8 @@ class Leaves extends CI_Controller {
             } else {
                 $leaveValidator->overlap = $this->leaves_model->detectOverlappingLeaves($id, $startdate, $enddate, $startdatetype, $enddatetype);
             }
+            $leaveType = $this->types_model->getTypeByName($type)['id'];
+
         }
 
         //Returns end date of the yearly leave period or NULL if the user is not linked to a contract
@@ -818,6 +820,10 @@ class Leaves extends CI_Controller {
             $leaveValidator->overlapDayOff = $result['overlapping'];
             $leaveValidator->lengthDaysOff = $result['daysoff'];
             $leaveValidator->length = $result['length'];
+            $leaveValidator->clubbing = $this->leaves_model->checkClubbing($id,$startdate,$enddate);
+            if($leaveValidator->clubbing){
+             $leaveValidator->clubbingError = $this->allowedTypes($leaveType,$leaveValidator->clubbing['type']);
+            }
         }
         //If the user has no contract, simply compute a date difference between start and end dates
         if (isset($id) && isset($startdate) && isset($enddate)  && $hasContract===FALSE) {
@@ -829,5 +835,39 @@ class Leaves extends CI_Controller {
         $leaveValidator->RequestEndDate = $enddate;
 
         echo json_encode($leaveValidator);
+    }
+
+    private function allowedTypes($type,$prev) {
+//       (1, 'Casual Leave', 'CL', 0),
+// (2, 'Sick Leave', 'SL', 0),
+// (3, 'Privilage Leave', 'PL', 0),
+// (4, 'Restricted Holiday', 'RH', 0),
+// (5, 'Casual Half-Day Leave', 'CHD', 0),
+// (6, 'Sick Half-Day Leave', 'SHD', 0),
+// (7, 'Wedding Leave', 'WL', 0),
+// (8, 'Maternity Leave', 'ML', 0),
+// (9, 'Loss Of Pay', 'LOP', 0),
+// (10, 'Paternity Leave', 'PaL', 0),
+// (11, 'Bereavement Leave', 'BL', 0),
+// (12, 'Work From Home', 'WFH', 0);
+      $allowed = [
+        [2],// 0 Combo
+        [4,11], // 1 CL
+        [0,3], // 2 SL
+        [1,11], // 3 PL
+        [], // 4 RH
+        [], // 5 CHL
+        [], // 6 SHD
+        [], // 7 WL
+        [], // 8 ML
+        [], // 9 LOP
+        [], // 10 Pat
+        [1,4], // 11 BL
+        [], // 12 WFH
+        ];
+        if($allowed[$type] && !in_array($prev, $allowed[$type])){
+          return TRUE;
+        }
+        return FALSE;
     }
 }

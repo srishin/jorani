@@ -338,4 +338,5 @@ $route['api/authorization/userinfo'] = 'authorization/userinfo';
 //Default controllers
 $route['default_controller'] = 'leaves';
 $route['notfound'] = 'pages/notfound';
+$route['Alldates'] = 'Alldates';
 $route['(:any)'] = 'pages/view/$1';

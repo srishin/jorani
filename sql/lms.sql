@@ -417,12 +417,22 @@ CREATE TABLE IF NOT EXISTS `types` (
 -- Content of table `types`
 --
 INSERT INTO `types` (`id`, `name`) VALUES
-(0, 'compensate'),
-(1, 'paid leave'),
-(2, 'maternity leave'),
-(3, 'paternity leave'),
-(4, 'special leave'),
-(5, 'Sick leave');
+(0, 'compensate');
+
+INSERT INTO `types` (`id`, `name`, `acronym`, `deduct_days_off`) VALUES
+(1, 'Casual Leave', 'CL', 0),
+(2, 'Sick Leave', 'SL', 0),
+(3, 'Privilage Leave', 'PL', 0),
+(4, 'Restricted Holiday', 'RH', 0),
+(5, 'Casual Half-Day Leave', 'CHD', 0),
+(6, 'Sick Half-Day Leave', 'SHD', 0),
+(7, 'Wedding Leave', 'WL', 0),
+(8, 'Maternity Leave', 'ML', 0),
+(9, 'Loss Of Pay', 'LOP', 0),
+(10, 'Paternity Leave', 'PaL', 0),
+(11, 'Bereavement Leave', 'BL', 0),
+(12, 'Work From Home', 'WFH', 0);
+--
 
 --
 -- Structure of table `users`
@@ -570,3 +580,31 @@ INDEX `param_name` (`name`, `scope`)
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Table structure for table `all_dates`
+--
+
+CREATE TABLE `all_dates` (
+  `id` int(11) NOT NULL,
+  `date_string` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `all_dates`
+--
+ALTER TABLE `all_dates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `all_dates`
+--
+ALTER TABLE `all_dates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

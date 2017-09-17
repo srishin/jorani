@@ -1816,4 +1816,45 @@ class Leaves_model extends CI_Model {
         return json_encode($json_parsed);
       }
     }
+
+    public function checkClubbing($id,$startdate,$enddate){
+
+        $prev = $this->db->select(['date_string'])
+                ->from('all_dates')
+                ->limit(1)
+                ->join('dayoffs','date = date_string','left outer')
+                ->where('date_string < DATE(\'' . $startdate . '\')') 
+                ->where('date IS NULL')
+                ->order_by('date_string','desc')
+                ->get()->row_array();
+        $next = $this->db->select(['date_string'])
+                ->from('all_dates')
+                ->limit(1)
+                ->join('dayoffs','date = date_string','left outer')
+                ->where('date_string > DATE(\'' . $enddate . '\')') 
+                ->where('date IS NULL')
+                ->order_by('date_string')
+                ->get()->row_array();
+        // Check  user has taken leave on last working day
+        if($prev['date_string']){
+            $res = $this->db
+                ->select(['duration','type'])
+                ->where('status < 4')
+                ->get_where('leaves',['enddate'=>$prev['date_string'],'employee'=>$id]);
+                if($res->num_rows()){
+                    return $res->row_array();
+                }
+        }
+        // Check  user has taken leave on next working day
+        if($next['date_string']){
+            $res = $this->db
+                ->select(['duration','type'])
+                ->where('status < 4')
+                ->get_where('leaves',['startdate'=>$next['date_string'],'employee'=>$id]);
+                if($res->num_rows()){
+                    return $res->row_array();
+                }
+        }
+        return FALSE;
+    }
 }

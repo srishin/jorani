@@ -90,3 +90,6 @@ We thank the following open source projects for the components used by Jorani:
 * Selectize https://github.com/brianreavis/selectize.js
 * clipboard.js https://github.com/zenorocha/clipboard.js
 * Google noto fonts https://www.google.com/get/noto/
+
+#  After installation
+* Go to $jorani_host_address/Alldates/
