@@ -6,6 +6,7 @@
  * @since         0.3.0
  */
 
+
 //Try to calculate the length of the leave
 function getLeaveLength(refreshInfos) {
     refreshInfos = typeof refreshInfos !== 'undefined' ? refreshInfos : true;
@@ -281,6 +282,7 @@ $(function () {
 
     $("#frmLeaveForm").submit(function(e) {
         if (validate_form()) {
+            $('button').attr("disabled", "disabled");
             return true;
         } else {
             e.preventDefault();

@@ -8,6 +8,8 @@
  */
 ?>
 
+
+
 <h2><?php echo lang('leaves_create_title');?> &nbsp;<?php echo $help;?></h2>
 
 <div class="row-fluid">
@@ -122,6 +124,7 @@ $(document).on("click", "#showNoneWorkedDay", function(e) {
 
     var overlappingWithDayOff = "<?php echo lang('leaves_flash_msg_overlap_dayoff');?>";
     var listOfDaysOffTitle = "<?php echo lang('leaves_flash_spn_list_days_off');?>";
+
 
 function validate_form() {
     var fieldname = "";

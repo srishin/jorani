@@ -1,4 +1,4 @@
-<h1>Leave and Overtime Management System</h1>
+<h1>Leave and Overtime Management   </h1>
 
 <p>Welcome in Jorani. If you are an employee, you could now:</p>
 <ul>
